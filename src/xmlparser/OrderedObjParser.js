@@ -182,9 +182,21 @@ const parseXml = function(xmlData) {
   let currentNode = xmlObj;
   let textData = "";
   let jPath = "";
+  let curLine = 1;
+  let curCh = 1;
   for(let i=0; i< xmlData.length; i++){//for each char in XML data
     const ch = xmlData[i];
+    if(ch === '\n'){
+      curLine ++;
+      curCh = 1;
+    } else {
+      curCh ++;
+    }
     if(ch === '<'){
+      if(this.options.sourceLocationName && currentNode.child.length === 0) {
+        currentNode.add(this.options.sourceLocationName, curLine+":"+curCh);
+        //[ { '#text': 'Student details' } ]
+      }
       // const nextIndex = i+1;
       // const _2ndChar = xmlData[nextIndex];
       if( xmlData[i+1] === '/') {//Closing Tag
@@ -235,6 +247,10 @@ const parseXml = function(xmlData) {
   
           const childNode = new xmlNode(tagData.tagName);
           childNode.add(this.options.textNodeName, "");
+          if(this.options.sourceLocationName && childNode.child.length === 0) {
+            childNode.add(this.options.sourceLocationName, curLine+":"+curCh);
+            //[ { '#text': 'Student details' } ]
+          }
           
           if(tagData.tagName !== tagData.tagExp && tagData.attrExpPresent){
             childNode[":@"] = this.buildAttributesMap(tagData.tagExp, jPath, tagData.tagName);
@@ -325,6 +341,10 @@ const parseXml = function(xmlData) {
           }
 
           const childNode = new xmlNode(tagName);
+          if(this.options.sourceLocationName && childNode.child.length === 0) {
+            childNode.add(this.options.sourceLocationName, curLine+":"+curCh);
+            //[ { '#text': 'Student details' } ]
+          }
           if(tagName !== tagExp && attrExpPresent){
             childNode[":@"] = this.buildAttributesMap(tagExp, jPath, tagName);
           }
@@ -352,6 +372,10 @@ const parseXml = function(xmlData) {
             }
 
             const childNode = new xmlNode(tagName);
+            if(this.options.sourceLocationName && childNode.child.length === 0) {
+              childNode.add(this.options.sourceLocationName, curLine+":"+curCh);
+              //[ { '#text': 'Student details' } ]
+            }
             if(tagName !== tagExp && attrExpPresent){
               childNode[":@"] = this.buildAttributesMap(tagExp, jPath, tagName);
             }
@@ -361,6 +385,10 @@ const parseXml = function(xmlData) {
     //opening tag
           else{
             const childNode = new xmlNode( tagName);
+            if(this.options.sourceLocationName && childNode.child.length === 0) {
+              childNode.add(this.options.sourceLocationName, curLine+":"+curCh);
+              //[ { '#text': 'Student details' } ]
+            }
             this.tagsNodeStack.push(currentNode);
             
             if(tagName !== tagExp && attrExpPresent){

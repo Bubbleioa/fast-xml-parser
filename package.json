@@ -4,7 +4,7 @@
   "description": "Validate XML, Parse XML, Build XML without C/C++ based libraries",
   "main": "./src/fxp.js",
   "scripts": {
-    "test": "nyc --reporter=lcov --reporter=text jasmine spec/*spec.js",
+    "test": "nyc --reporter=lcov --reporter=text jasmine spec/*.js",
     "unit": "jasmine",
     "coverage": "nyc report --reporter html --reporter text -t .nyc_output --report-dir .nyc_output/summary",
     "perf": "node ./benchmark/perfTest3.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/NaturalIntelligence/fast-xml-parser"
+    "url": "https://github.com/Bubbleioa/fast-xml-parser"
   },
   "keywords": [
     "fast",

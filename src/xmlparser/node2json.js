@@ -30,6 +30,9 @@ function compress(arr, options, jPath){
     if(property === options.textNodeName){
       if(text === undefined) text = tagObj[property];
       else text += "" + tagObj[property];
+    }else if(property === options.sourceLocationName ){
+      compressedObj[property] = tagObj[property];
+      continue;
     }else if(property === undefined){
       continue;
     }else if(tagObj[property]){
