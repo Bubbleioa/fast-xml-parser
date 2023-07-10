@@ -184,13 +184,17 @@ const parseXml = function(xmlData) {
   let jPath = "";
   let curLine = 1;
   let curCh = 1;
+  let lastIndex = -1;
   for(let i=0; i< xmlData.length; i++){//for each char in XML data
     const ch = xmlData[i];
-    if(ch === '\n'){
-      curLine ++;
-      curCh = 1;
-    } else {
-      curCh ++;
+    while(lastIndex<i){
+      const ch2 = xmlData[++lastIndex];
+      if(ch2 === '\n'){
+        curLine ++;
+        curCh = 1;
+      } else {
+        curCh ++;
+      }
     }
     if(ch === '<'){
       if(this.options.sourceLocationName && currentNode.child.length === 0) {
